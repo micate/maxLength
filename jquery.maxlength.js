@@ -93,7 +93,7 @@
  * 最大长度计算显示插件
  *
  * @author    micate {@link http://micate.me}
- * @homepage  @github {@link http://github.com/micate/maxlength}
+ * @homepage  @github {@link http://github.com/micate/maxLength}
  * @depends   jQuery 1.3.2+
  * @version   $Id$
  */
@@ -114,7 +114,6 @@
             },
             substr: function(val, length) {
                 var parts = (val + '').split(''), part, result = '', current = 0;
-                console.info(parts);
                 while (part = parts.shift()) {
                     if (part.match(/[\x00-\xff]/)) { // 英文
                         if ((current + 1) > length) {
@@ -175,7 +174,7 @@
             }
 
             if (opt.display && !$.isFunction(opt.display)) {
-                opt.display = $(opt.display);
+                opt.display = opt.display.jquery ? opt.display : $(opt.display);
                 if (!opt.display.length) {
                     opt.display = null;
                 }
@@ -215,7 +214,6 @@
                         || (code >= 48 && code <= 57) // 0-9
                         || $.inArray(code, [192, 173, 61, 219, 220, 221, 222, 59, 188, 190, 191]) > -1) { // other input
                         ev.preventDefault();
-                        ev.stopPropagation();
                     }
                 }
             });
@@ -234,7 +232,7 @@
     };
 
     $.fn.maxLength.MODE_NORMAL = 1;  // 任何一个字符都算一个长度
-    $.fn.maxLength.MODE_MINIMUM = 2; // 一个英文算一个，一个中文算两个
+    $.fn.maxLength.MODE_MAXIMUM = 2; // 一个英文算一个，一个中文算两个
     $.fn.maxLength.MODE_CHINESE = 3; // 一个中文算一个，两个英文算一个
 
     $.fn.maxLength.COUNT_LENGTH = 1; // 显示输入长度
