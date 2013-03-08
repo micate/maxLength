@@ -59,5 +59,5 @@ Boolean 值，默认为 true
 
 ## 说明
 
-在 IE9 < 9 下，正则 split 的结果不可依赖，因此使用了 [@slevithan](http://twitter.com/slevithan) 的 [解决方案](http://blog.stevenlevithan.com/archives/cross-browser-split)。
+在 IE < 9 下，正则 split 的结果不可依赖，因此使用了 [@slevithan](http://twitter.com/slevithan) 的 [解决方案](http://blog.stevenlevithan.com/archives/cross-browser-split)。
 
