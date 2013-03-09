@@ -57,7 +57,4 @@ Boolean 值，默认为 true
 
 支持 function 回调、CSS 选择器字符串、DOM 元素、jQuery 元素，如不提供则自动在文本框后追加一个 span 用以显示计数
 
-## 说明
-
-在 IE < 9 下，正则 split 的结果不可依赖，因此使用了 [@slevithan](http://twitter.com/slevithan) 的 [解决方案](http://blog.stevenlevithan.com/archives/cross-browser-split)。
 
