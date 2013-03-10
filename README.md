@@ -13,6 +13,7 @@ $('[data-maxlength]').maxLength({
     prevent: true,                      // 阻止继续输入
     count: $.fn.maxLength.COUNT_LENGTH, // 计数显示方式
     display: null,                      // 显示提示信息回调或元素
+    update: null,                       // 输入框内容改变回调
     mode: $.fn.maxLength.MODE_CHINESE   // 长度计算方式
 });
 ```
@@ -37,6 +38,14 @@ Boolean 值，默认为 true
 
 	显示已输入长度
 
+### display 计数显示元素或回调
+
+支持 function 回调、CSS 选择器字符串、DOM 元素、jQuery 元素，如不提供则自动在文本框后追加一个 span 用以显示计数
+
+### update 输入框内容改变回调
+
+当输入框内容改变时触发该回调，满足一些需要根据内容动态调整输入框或提示元素的需求
+
 ### mode 长度计算方式
 
 实现了 3 种长度计算方式：
@@ -44,17 +53,11 @@ Boolean 值，默认为 true
 1. $.fn.maxLength.MODE_NORMAL
 
 	JavaScript 默认长度计算方式，无论中英文，均计算为一个长度。
-	
+
 2. $.fn.maxLength.MODE_MAXIMUM
-	
+
 	一个英文计算一个长度，一个中文计算两个长度。
-	
+
 3. $.fn.maxLength.MODE_CHINESE 默认值
 
 	所谓中式计算方式，两个英文计算一个长度，一个中文计算一个长度。
-
-### display 计数显示元素或回调
-
-支持 function 回调、CSS 选择器字符串、DOM 元素、jQuery 元素，如不提供则自动在文本框后追加一个 span 用以显示计数
-
-

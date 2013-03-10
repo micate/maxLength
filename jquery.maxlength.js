@@ -76,10 +76,11 @@
         return this.each(function() {
             var opt = $.extend({}, DEFAULTS, options),
                 elem = $(this),
-                func = funcs[opt.mode];
+                func = funcs[opt.mode],
+                update = $.isFunction(opt.update) ? opt.update : null;
 
-            if (isString(opt.limit)) {
-                opt.limit = parseInt(elem.attr(opt.limit));
+            if (isString(opt.limit) || !opt.limit) {
+                opt.limit = parseInt(elem.attr(opt.limit || 'data-maxlength'));
             }
 
             if (opt.display && !$.isFunction(opt.display)) {
@@ -107,24 +108,27 @@
             function limitUpdate() {
                 var value = elem.val(),
                     length = func.length(value);
-                if (opt.prevent && length > opt.limit) {
+                if (opt.prevent && opt.limit && length > opt.limit) {
                     elem.val(func.substr(value, opt.limit));
                     length = opt.limit;
                 }
                 updateTips(length, false);
+                update && update.apply(elem, [length]);
             }
 
             // 阻止掉非输入法模式下的超出操作
-            opt.prevent && opt.limit && elem.bind('keydown', function(ev) {
+            elem.bind('keydown', function(ev) {
                 var value = elem.val(),
+                    length = func.length(value),
                     code = ev.keyCode;
-                if (func.length(value) >= opt.limit) {
+                if (opt.prevent && opt.limit && length >= opt.limit) {
                     if ((code >= 65 && code <= 90 && !(ev.ctrlKey || ev.metaKey)) // a-z
                         || (code >= 48 && code <= 57) // 0-9
                         || $.inArray(code, [192, 173, 61, 219, 220, 221, 222, 59, 188, 190, 191]) > -1) { // other input
                         ev.preventDefault();
                     }
                 }
+                update && update.apply(elem, [length]);
             });
 
             // 输入、粘贴或改变
@@ -154,6 +158,7 @@
         prevent: true,                      // 阻止继续输入
         count: $.fn.maxLength.COUNT_LENGTH, // 计数显示方式
         display: null,                      // 显示提示信息回调或元素
+        update: null,                       // 输入框内容改变回调
         mode: $.fn.maxLength.MODE_CHINESE   // 长度计算方式
     };
 
