@@ -90,11 +90,18 @@
                 }
             }
 
-            function updateTips(length, error) {
+            function updateTips(length) {
+                var error = false;
                 if (opt.limit && opt.count == $.fn.maxLength.COUNT_LEFT) {
                     length = Math.ceil(opt.limit - length);
+                    if (length < 0) {
+                        error = true;
+                    }
                 } else {
                     length = Math.floor(length);
+                    if (opt.limit && length > opt.limit) {
+                        error = true;
+                    }
                 }
                 if ($.isFunction(opt.display)) {
                     opt.display.apply(elem, [length, error]);
@@ -114,7 +121,7 @@
                     elem.val(func.substr(value, opt.limit));
                     length = opt.limit;
                 }
-                updateTips(length, false);
+                updateTips(length);
                 update && update.apply(elem, [length]);
             }
 
