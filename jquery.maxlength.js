@@ -42,7 +42,7 @@
         },
         3: {
             length: function(val) {
-                return Math.ceil((val + '').replace(/[^\x00-\xff]/gm, '__').length / 2);
+                return (val + '').replace(/[^\x00-\xff]/gm, '__').length / 2;
             },
             substr: function(val, length) {
                 var parts = (val + '').split(''), part, result = '', current = 0;
@@ -92,7 +92,9 @@
 
             function updateTips(length, error) {
                 if (opt.limit && opt.count == $.fn.maxLength.COUNT_LEFT) {
-                    length = opt.limit - length;
+                    length = Math.ceil(opt.limit - length);
+                } else {
+                    length = Math.floor(length);
                 }
                 if ($.isFunction(opt.display)) {
                     opt.display.apply(elem, [length, error]);
